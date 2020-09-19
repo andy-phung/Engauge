@@ -1,0 +1,41 @@
+.navbar {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    flex: 1;
+    background-color: rgb(77, 163, 216);;
+}
+
+.navbar-item {
+    display: flex;
+    padding: 1.5vh 2.5vw;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(77, 163, 216);
+    font-size: 1em;
+}
+
+.nav-button {
+    align-items: center;
+    justify-content: center;
+    border-width: 0;
+    border-radius: 15px;
+}
+
+.navbar-item:hover {
+    background-color: rgb(230, 74, 87);
+}
+
+.nav-menu {
+    display: none;
+}
+
+@media only screen and (max-width: 700px) {
+    .navbar {
+        flex-direction: column;
+        display: none;
+    }
+    .nav-menu {
+        display: block;
+    }
+}
