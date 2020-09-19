@@ -33,13 +33,21 @@
 
 .headblock3 { 
     background: linear-gradient(to right, #3648b9, rgba(45, 55, 146, 0.95));
-    right: 10vw;
+    right:  0vw;
 }
 .headblock2 { 
     background: linear-gradient(to right, #3bb865, rgba(44, 143, 88, 0.95));
-    right: 20vw;
+    right: 10vw;
 }
 .headblock1 { 
     background: linear-gradient(to right, #b63555, rgba(138, 42, 50, 0.95));
-    right: 0vw;
+    right: 20vw;
+}
+
+@media only screen and (max-width: 700px) {
+    
+    .headblock {
+        width: 10vw;
+        height: 28vh;
+    }
 }

@@ -3,7 +3,7 @@
     width: 100%;
     flex-direction: row;
     flex: 1;
-    background-color: rgb(77, 163, 216);;
+    background-color: rgb(77, 163, 216);
 }
 
 .navbar-item {
@@ -24,6 +24,8 @@
 
 .navbar-item:hover {
     background-color: rgb(230, 74, 87);
+    color: ivory;
+    transition: 0.3s;
 }
 
 .nav-menu {
