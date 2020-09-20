@@ -79,14 +79,14 @@ while(True):
       files.append(entry.name)
     #print(entry)
 
-    PATH = "/" + str(files[0])
+    PATH = "/" + files[0]
     f = dbx.files_get_temporary_link(PATH)
     #print(f.link)
     cap = cv2.VideoCapture(str(f.link))
 
+
     frame_list = get_subjects(cap, 5)
     divided = divide_four(frame_list)
-    print(divided)
     print('checking shape')
     #print(divided[0][0])
     divided = divide_four(frame_list)
@@ -109,16 +109,16 @@ while(True):
       s_avg = []
       for frame in student:
         engagement, stress = predict(frame)
-        print("works?")
-        print(engagement)
-        print(stress)
+        #print("works?")
+        #print(engagement)
+        #print(stress)
         e_avg.append(engagement)
         s_avg.append(stress)
-      print("checkpoint")
-      print(e_avg)
-      print(s_avg)
-      #assert len(e_avg) > 0
-      #assert len(s_avg) > 0
+      #print("checkpoint")
+      #print(e_avg)
+      #print(s_avg)
+      assert len(e_avg) > 0
+      assert len(s_avg) > 0
       student_metrics[key].append(statistics.mean(e_avg))
       student_metrics[key].append(statistics.mean(s_avg))
 
@@ -136,11 +136,11 @@ while(True):
 
     for key, value in student_metrics.items():
       print(int(key))
-      update_list = ["Student " + str(key), value[0], value[1], value[2]]
+      update_list = ["Student " + str(key), value[0], value[1], ".", value[2]]
       index = int(key) + 1
       sheet.insert_row(update_list, index)
 
-    update_list = ["Class Average", class_performance[0], class_performance[1], class_performance[2]]
+    update_list = ["Class Average", class_performance[0], class_performance[1], ".", class_performance[2]]
     sheet.insert_row(update_list, 6)
     time.sleep(20)
   else:
