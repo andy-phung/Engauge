@@ -20,8 +20,7 @@ tr:nth-child(even){
     /* color: white; */
 }
 
-h3 {
-    font-size: 1.5em;
+.subhead {
     text-decoration: underline ;
     text-decoration-color: black;
 }

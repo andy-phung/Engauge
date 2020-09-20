@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { doc, sheet as ogsheet } from './FileUpload'
 import '../Styles/Reports.css'
 
@@ -14,6 +14,20 @@ const sheetReload = async () => {
     }
     await sheet.loadCells();
 }
+
+const sheetClean = async () => {
+    console.log("SHEET cleaning")
+    let temprows = await doc.sheetsByIndex[0].getRows()
+    if (temprows.length === 6) {
+        temprows[1].delete()
+        temprows[0].delete()
+        temprows[2].delete()
+        temprows[3].delete()
+        temprows[4].delete()
+        temprows[5].delete()
+    }
+}
+
 let contents;
 class Reports extends React.Component {
     constructor() {
@@ -33,15 +47,7 @@ class Reports extends React.Component {
     }
 
     componentDidUpdate() {
-        contents = this.state.data.forEach(item => {
-            return <tr>
-              <td>{item.Student_Name}</td> 
-              <td>{item.Engagement}</td>
-              <td>{item.Stress}</td>
-              <td>{item.Drowsiness}</td>
-              <td>{item.Learning_Ability}</td>
-            </tr>
-       })
+        sheetClean()
     }
 
     render() {
@@ -58,14 +64,14 @@ class Reports extends React.Component {
        })
        console.log(contents, "contents")
         return(<>
-            <h3>Reports</h3>
+            <h1 className="subhead">Reports</h1>
             <table className="table">
-                <tbody>
                     <th>Student Name</th>
                     <th>Engagement</th>
                     <th>Stress</th>
                     <th>Drowsiness</th>
                     <th>Learning Ability</th>
+                <tbody>
                 {this.state.data.map((item) => 
                 <tr>
                     <td>{item.Student_Name}</td> 

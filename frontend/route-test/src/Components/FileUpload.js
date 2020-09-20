@@ -24,12 +24,11 @@ const initDoc = async  () => {
 initDoc()
 
 const filesUploaded = async () => {
-    console.log("File Uploads")
+  console.log("File Uploads")
   await doc.loadInfo(); // loads document properties and worksheets
   sheet = doc.sheetsByIndex[0];
   await sheet.loadCells()
-  const rows = await sheet.getRows()
-  console.log(rows[0].Student_Name)
+  // const rows = await sheet.getRows()
   sheet.getCell(1,6).value = 'x'
   await sheet.saveCells([sheet.getCell(1, 6)])
 }
@@ -51,11 +50,14 @@ function changeHandler(event) {
   });
 
   dbx.filesUpload({contents: event.target.files[0], path: '/zoom_0.mp4', mute: true, mode: {".tag": 'add'}, autorename: true, strict_conflict: false})
-  filesUploaded()
+  filesUploaded().then(window.alert('Uploaded!'))
 }
 
 export default function FileUpload () {
     return(
+      <>
+      <h1>Welcome!</h1>
       <input type="file" id="file-up" className="fileup" onChange={changeHandler} />
+      </>
     )
 }
