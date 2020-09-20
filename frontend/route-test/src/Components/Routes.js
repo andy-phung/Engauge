@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, NavLink } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import FileUpload from './FileUpload';
 import '../Styles/Routes.css' 
 import Reports from './Reports';

@@ -15,6 +15,7 @@ doc.useServiceAccountAuth({
 
 export let sheet;
 const initDoc = async  () => {
+    console.log("DOC init")
   await doc.loadInfo(); // loads document properties and worksheets
   sheet = doc.sheetsByIndex[0];
   await console.log(doc);
@@ -23,6 +24,7 @@ const initDoc = async  () => {
 initDoc()
 
 const filesUploaded = async () => {
+    console.log("File Uploads")
   await doc.loadInfo(); // loads document properties and worksheets
   sheet = doc.sheetsByIndex[0];
   await sheet.loadCells()
@@ -48,7 +50,7 @@ function changeHandler(event) {
     console.log(error);
   });
 
-  dbx.filesUpload({contents: event.target.files[0], path: '/test', mute: true, mode: {".tag": 'add'}, autorename: true, strict_conflict: false})
+  dbx.filesUpload({contents: event.target.files[0], path: '/zoom_0.mp4', mute: true, mode: {".tag": 'add'}, autorename: true, strict_conflict: false})
   filesUploaded()
 }
 

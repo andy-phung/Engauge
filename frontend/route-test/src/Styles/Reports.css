@@ -1,0 +1,27 @@
+.table {
+    border-collapse: collapse;
+    border-radius: 10px;
+
+}
+
+th {
+    background-color: #b63555;
+    color: white;
+    padding: 2%;
+}
+
+th, td {
+    padding: 4%;
+    text-align: left;
+}
+
+tr:nth-child(even){
+    background-color: #d1c8c8;
+    /* color: white; */
+}
+
+h3 {
+    font-size: 1.5em;
+    text-decoration: underline ;
+    text-decoration-color: black;
+}
