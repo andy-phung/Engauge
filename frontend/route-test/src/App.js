@@ -1,27 +1,45 @@
 /* global gapi */
 
 import React from 'react';
-import { gapi } from 'gapi-script'
+import { GoogleSpreadsheet } from 'google-spreadsheet'
 import Routes from './Components/Routes';
 import Navbar from './Components/Navbar';
 import './Styles/App.css';
 
-// const fs = require('fs');
-// const readline = require('readline');
-// const { google } = require('googleapis');
+const SPREADSHEET_ID = '1pt410W7vnqMWDZC5a5J829-WUU5TlNwQAUZFlaSQZpA';
+// const SHEET_ID = 0;
+const CLIENT_EMAIL = 'engauge@engauge-290100.iam.gserviceaccount.com';
+const PRIVATE_KEY = '-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQClmYSPAKdfLCCj\nXUeszjLTUGARcdtqkM8Qls6fhRGBeTmLwbmvfY5ysnwQbddPfaEy1fv9TtMY/yUz\nxpm7HKYrLP/Fd0eRSeDCJwzb9OER4pKVFYoDgz0ptj5qt8WyQc5t64i9v0SzzIme\n0FAWZGsEqLhqlfT7g6W9IYdtmDLjfkPnSMPAKRo1hSS4fDy1+93NDy0ojqLldBJA\nMpO5ZO45cO41QYcDmBM+lE9StqSY+6NMATJqI2oFjoTXEurkEgK5c3KLzEwLyR1c\neqnIlSv3ncA7rI1o8UNAMxwFIRNnYz2vXhBVw0GcrYILFzsfeAhJvVExfueeRnKg\n/8Qmln8lAgMBAAECggEABmdQlTAPCNLdwzty71d85yd7Q4lt1OnbG/bc8BW29tT/\neOxJmCPoi35j5kW9FvWSc3MLXsD60ENjhqRGIxJpSY+gp1vksFVVQ+S7LlFCl8y1\nYt71mourZI7HzJwlIK7DQwRh4gaAq1w8MSA4jJke+0vj77kzQzuUv+LJSB9jzmCu\nY5lA42fAz9cO7tTnoVwzNZCZEoe9qc/2KAQil1FZR/4qPgL4r7OOmME+8Ll7F1X5\nOZ5RbH4nt+5/3tD1aY09wfZj4FPIGvlVtxL2FfuA7o53hSo+FRgMNLL7m+5eiz8r\nmnChJYDDWmdnkbTm85rMh4gX67Q/hRmlwhN+44cGsQKBgQDV0npXung11dahHQJk\nAsSTdTQ7kEbqRr0zQZCvn71zUyS1Nvw/kgN8vxR4yjx+QzM/B+TTrcJKAmMs34x1\nATbl/mWHJXNFKAXxNsFfSEv1+b97UDiBASf0BS03PRlFteLsgguvCjNiPHW1OhS6\nV9Qu4QCRuJxdtpTbhUqnAhVSdQKBgQDGQ+p7AdAViK6c31mTYFL8r4GUxfvJvKCz\ngm3Ob+ClKmNU4Y97C6Fv9EO9Llp/9HJ/IIYHU1cHAIvPCG/8kJaKpA7rtMVSrStT\ngJhebqZOTiLAGHRm+5w53bC7MloiVUb0gkcvDTGWrYuFFXN5OmtkmeT7fwejtGlA\ndt/Fe8qD8QKBgQCLOpxzV3ZDB9TT4AHYgXziz6SNTGsAzcMRBxZhZVCFMZRrczxZ\nYIhoyDtaU8WEKdnKpyc3NqOWcWuGoqHg5kOLC1Ws5JPkaiVEZfUQSBE+P7uRXjEM\nv2X2nRBOMbitDbyPaDaXabr/soKq2QD6PYpqZBRszpry4pqXPnnXuaGMqQKBgQCd\njsFbSWCEjF8/GRuFS+oHFq4ifYePlRAcN41tnWjnuJzBipLMVLzRTEs8nwaaYrdO\noZkBX1BspxlzyJ++FWUc/i1BUSHyht1EeZAck1AkMGHbSFPQtyk6rxtQWD5axGwj\nyRgqoxCCTp3uf9KJR0yq4MWgux1mEewGp7FCrhKM8QKBgQCfJP3yXgp/ShtJf2Dt\nGmaYAbnMvhxM791nDT8mM5V9R4TilirBzVvCbyPqi+7PUiz4qSM9c7H8pIgEvSOA\nSJXs98LBk/B0QRcdPOI3P5vXSF+vM6O6tFsABKy7qJJQBPdrVK0/zfhnlD1CWnJm\nW6+WczvhQ+BInmyCAmtYKbNzYA==\n-----END PRIVATE KEY-----\n';
 
-console.log(gapi)
-window.addEventListener("google-loaded", () => {
-  console.log(gapi)
-  handleClientLoad();
-  initClient();
+const doc = new GoogleSpreadsheet(SPREADSHEET_ID);
+doc.useServiceAccountAuth({
+  client_email: CLIENT_EMAIL,
+  private_key: PRIVATE_KEY,
 });
-const CLIENT_ID = '485430344571-ans3q5ql0gu1q6826o5t21hh42220d2v.apps.googleusercontent.com';
-const API_KEY = 'AIzaSyBefOJJ5J4hhJVJTs5clq-wwa0CeQTOnnc';
+
+let sheet;
+const initDoc = async  () => {
+  await doc.loadInfo(); // loads document properties and worksheets
+  sheet = doc.sheetsByIndex[0];
+  await console.log(doc);
+  await sheet.loadCells()
+}
+initDoc()
+
+const filesUploaded = async () => {
+  await doc.loadInfo(); // loads document properties and worksheets
+  sheet = doc.sheetsByIndex[0];
+  await sheet.loadCells()
+  const rows = await sheet.getRows()
+  console.log(rows[0].Student_Name)
+  sheet.getCell(1,6).value = 'x'
+  await sheet.saveCells([sheet.getCell(1, 6)])
+}
+// filesUploaded()
 
 require('isomorphic-fetch'); // or another library of choice.
 const Dropbox = require('dropbox').Dropbox;
-const dbx = new Dropbox({ accessToken: 'uj19moYp_NIAAAAAAAAAAbSPRn10Ac9U5dBteiLLyvDyD5EryYnyIEAFOndwEZ31' });
+const dbx = new Dropbox({ accessToken: 'n3noMeBsNA4AAAAAAAAAAXMVXw1Xyx6IFNdHBQ5bXTvSBko6-ezxdz8A1SiHSf4t' });
 
 
 function changeHandler(event) {
@@ -34,8 +52,8 @@ function changeHandler(event) {
     console.log(error);
   });
 
-  // dbx.filesUpload({contents: event.target.files[0], path: '/test', mute: true, mode: {".tag": 'add'}, autorename: true, strict_conflict: false})
-  doSheetStuff()
+  dbx.filesUpload({contents: event.target.files[0], path: '/test', mute: true, mode: {".tag": 'add'}, autorename: true, strict_conflict: false})
+  filesUploaded()
 }
 
 function App() {
@@ -53,104 +71,5 @@ function App() {
     </div>
   )
 }
-
-function doSheetStuff() {
-  handleAuthClick();
-}
-
-var DISCOVERY_DOCS = ["https://sheets.googleapis.com/$discovery/rest?version=v4"];
-var SCOPES = "https://www.googleapis.com/auth/spreadsheets.readonly";
-
-/**
- *  Initializes the API client library and sets up sign-in state
- *  listeners.
- */
-
-/**
- *  Called when the signed in status changes, to update the UI
- *  appropriately. After a sign-in, the API is called.
- */
-function updateSigninStatus(isSignedIn) {
-  if (isSignedIn) {
-    listMajors();
-  }
-}
-
-/**
- *  Sign in the user upon button click.
- */
-function handleAuthClick(event) {
-  console.log(gapi)
-  gapi.auth2.getAuthInstance().signIn();
-}
-
-/**
- *  Sign out the user upon button click.
- */
-function handleSignoutClick(event) {
-  gapi.auth2.getAuthInstance().signOut();
-}
-
-/**
- * Append a pre element to the body containing the given message
- * as its text node. Used to display the results of the API call.
- *
- * @param {string} message Text to be placed in pre element.
- */
-function appendPre(message) {
-  var pre = document.getElementById('content');
-  var textContent = document.createTextNode(message + '\n');
-  pre.appendChild(textContent);
-}
-
-/**
- * Print the names and majors of students in a sample spreadsheet:
- * https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
- */
-function listMajors() {
-  gapi.client.sheets.spreadsheets.values.get({
-    spreadsheetId: '1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms',
-    range: 'Class Data!A2:E',
-  }).then(function(response) {
-    var range = response.result;
-    if (range.values.length > 0) {
-      appendPre('Name, Major:');
-      for (let i = 0; i < range.values.length; i++) {
-        var row = range.values[i];
-        // Print columns A and E, which correspond to indices 0 and 4.
-        appendPre(row[0] + ', ' + row[4]);
-      }
-    } else {
-      appendPre('No data found.');
-    }
-  }, function(response) {
-    appendPre('Error: ' + response.result.error.message);
-  });
-}
-
-function initClient() {
-  console.log(gapi.client)
-  gapi.client.init({
-    apiKey: API_KEY,
-    clientId: CLIENT_ID,
-    discoveryDocs: DISCOVERY_DOCS,
-    scope: SCOPES
-  }).then(function () {
-    // Listen for sign-in state changes.
-    gapi.auth2.getAuthInstance().isSignedIn.listen(updateSigninStatus);
-
-    // Handle the initial sign-in state.
-    updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
-    // authorizeButton.onclick = handleAuthClick;
-    // signoutButton.onclick = handleSignoutClick;
-  }, function(error) {
-    appendPre(JSON.stringify(error, null, 2));
-  });
-}
-
-function handleClientLoad() {
-  gapi.load('client:auth2', initClient);
-}
-
 
 export default App;
