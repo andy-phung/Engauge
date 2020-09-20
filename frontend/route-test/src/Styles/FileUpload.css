@@ -1,0 +1,6 @@
+.fileup {
+    display: flex;
+    flex: 1;
+    background-color: bisque;
+    border-radius: 2px;
+}

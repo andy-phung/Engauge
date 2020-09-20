@@ -21,9 +21,9 @@ export default function Navbar() {
         <>
             <div className="nav-menu" onClick={() => { menuClick() }}>Menu</div>
             <div id="navbar" className="navbar">
-                <div className="navbar-item">Home</div>
-                <div className="navbar-item">Sessions</div>
-                <div className="navbar-item">Reports</div>
+                <a href="/"><div className="navbar-item" >Home</div></a>
+                <a href="/upload"><div className="navbar-item">Upload</div></a>
+                <a href="/reports"><div className="navbar-item">Reports</div></a>
             </div>
         </>
     )
