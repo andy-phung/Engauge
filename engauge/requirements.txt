@@ -1,5 +1,7 @@
-opencv-python
+opencv-contrib-python==3.4.4.19
 numpy==1.16.0
-tensorflow
+tensorflow-cpu
 pandas
 dropbox
+oauth2client
+gspread
